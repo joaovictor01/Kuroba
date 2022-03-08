@@ -26,10 +26,12 @@ import com.github.adamantcheese.chan.core.site.common.vichan.VichanApi;
 import com.github.adamantcheese.chan.core.site.common.vichan.VichanCommentParser;
 import com.github.adamantcheese.chan.core.site.common.vichan.VichanEndpoints;
 import com.github.adamantcheese.chan.core.model.Post;
+import com.github.adamantcheese.chan.BuildConfig;
 
 import java.util.Map;
 
 import okhttp3.HttpUrl;
+
 
 public class Chan1500
         extends CommonSite {
@@ -98,7 +100,7 @@ public class Chan1500
                 Board.fromSiteNameCode(this, "Moda", "clô"),
                 Board.fromSiteNameCode(this, "Medicina e Drogas", "med"),
                 Board.fromSiteNameCode(this, "Depressão", "muié"),
-                Board.fromSiteNameCode(this, "*fapfapfap*", "pron"),
+                Board.fromSiteNameCode(this, "*fapfapfap*", "pr0n"),
                 Board.fromSiteNameCode(this, "Neomulheres", "tr"),
                 Board.fromSiteNameCode(this, "Arquivo", "arquivo")
         );
@@ -128,6 +130,12 @@ public class Chan1500
                     case "gif":
                         ext = arg.get("ext");
                         break;
+                    case "mp3":
+                    case "m4a":
+                    case "ogg":
+                    case "flac":
+                    case "wav":
+                        return HttpUrl.parse(BuildConfig.RESOURCES_ENDPOINT + "audio_thumb.png");
                     default:
                         ext = "jpg";
                         break;
@@ -137,7 +145,6 @@ public class Chan1500
                 return HttpUrl.parse("https://1500chan.org/" + post.board.code + "/thumb/" + arg.get("tim") + "." + ext);
             }
         });
-
         setActions(new VichanActions(this) {
             @Override
             public void clearCookies() {
