@@ -122,6 +122,7 @@ public class VichanApi
         // File
         String fileId = null;
         String fileExt = null;
+        String embed = null;
         int fileWidth = 0;
         int fileHeight = 0;
         long fileSize = 0;
@@ -148,6 +149,16 @@ public class VichanApi
                     break;
                 case "name":
                     builder.name(reader.nextString());
+                    break;
+                case "embed":
+                    embed = reader.nextString();
+                    String videoLink = embed
+                            .substring(embed.indexOf("https://", embed.indexOf("\"")))
+                            .replace(" ","")
+                            .split("\"")[0];
+                    if (builder.comment != null) {
+                        builder.comment(String.format("%s\n%s", videoLink, builder.comment));
+                    }
                     break;
                 case "com":
                     builder.comment(reader.nextString());
@@ -258,7 +269,6 @@ public class VichanApi
             // Insert it at the beginning.
             files.add(0, image);
         }
-
         builder.images(files);
 
         if (builder.op) {
