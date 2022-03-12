@@ -370,7 +370,7 @@ public class VichanApi
                     .extension(fileExt)
                     .imageWidth(fileWidth)
                     .imageHeight(fileHeight)
-                    .spoiler(fileSpoiler)
+                    .spoiler(false)
                     .size(fileSize)
                     .fileHash(fileHash, true)
                     .build();
