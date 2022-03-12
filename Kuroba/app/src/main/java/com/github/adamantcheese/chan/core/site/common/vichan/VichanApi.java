@@ -154,14 +154,12 @@ public class VichanApi
                     break;
                 case "embed":
                     embed = reader.nextString();
-                    Pattern youtubeLinkPattern = Pattern.compile("https?://(?:youtu\\.be/|\\w+\\.youtube\\.\\w+/.*?(?:v=|\\bembed/|\\bv/|\\bshorts/))([\\w\\-]{11})([^\\s]*)(?:/|\\b)");
-                    Matcher matcher = youtubeLinkPattern.matcher(embed);
-                    String youtubeLink = null;
-                    if (matcher.find()) {
-                        youtubeLink = matcher.group(1);
-                    }
-                    if (builder.comment != null && youtubeLink != null) {
-                        builder.comment(String.format("%s\n%s", youtubeLink, builder.comment));
+                    String videoLink = embed
+                            .substring(embed.indexOf("https://", embed.indexOf("\"")))
+                            .replace(" ","")
+                            .split("\"")[0];
+                    if (builder.comment != null) {
+                        builder.comment(String.format("%s\n%s", videoLink, builder.comment));
                     }
                     break;
                 case "com":
